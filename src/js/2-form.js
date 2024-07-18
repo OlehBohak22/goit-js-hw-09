@@ -14,7 +14,7 @@ function saveToLocalStorage() {
 // Обробник події input для збереження актуальних даних з полів форми
 form.addEventListener('input', event => {
   const { name, value } = event.target;
-  formData[name] = value;
+  formData[name] = value.trim();
   saveToLocalStorage();
 });
 
@@ -23,8 +23,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const savedData = localStorage.getItem('feedback-form-state');
   if (savedData) {
     const parsedData = JSON.parse(savedData);
-    formData.email = parsedData.email;
-    formData.message = parsedData.message;
+    formData.email = parsedData.email.trim();
+    formData.message = parsedData.message.trim();
     form.elements.email.value = formData.email;
     form.elements.message.value = formData.message;
   }
@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // Обробник події submit для перевірки заповнених полів та очищення сховища
 form.addEventListener('submit', event => {
   event.preventDefault();
-  if (!formData.email || !formData.message) {
+  if (!formData.email.trim() || !formData.message.trim()) {
     alert('Fill please all fields');
     return;
   }
